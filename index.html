@@ -3,100 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Type Discovery</title>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>Digital Oracle | Анализ Личности</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #00f2fe;
-            --secondary: #4facfe;
-            --accent: #818cf8;
-            --bg: #030712;
+            --accent: #00f2fe;
+            --purple: #818cf8;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
         }
 
         body {
-            margin: 0; font-family: 'Manrope', sans-serif;
-            background: var(--bg);
+            margin: 0; font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #05070a;
             background-image: 
-                radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.2) 0, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(0, 242, 254, 0.2) 0, transparent 50%);
+                radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.15) 0, transparent 50%), 
+                radial-gradient(at 100% 100%, rgba(0, 242, 254, 0.1) 0, transparent 50%);
             color: white; min-height: 100vh;
-            display: flex; justify-content: center; align-items: center;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
 
-        /* Эффект стекла */
-        .glass-container {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .container { width: 90%; max-width: 800px; z-index: 2; }
+
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
             border-radius: 40px;
             padding: 60px 40px;
-            width: 90%; max-width: 800px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
             text-align: center;
-            animation: fadeIn 0.8s ease-out;
+            animation: fadeIn 0.8s ease;
         }
 
-        .question-text { font-size: 2rem; font-weight: 800; margin-bottom: 60px; line-height: 1.2; letter-spacing: -1px; }
+        .q-text { font-size: 2.2rem; font-weight: 800; margin-bottom: 50px; line-height: 1.2; letter-spacing: -1px; }
 
-        /* Та самая шкала в неоновом стиле */
-        .scale-box { display: flex; justify-content: space-between; align-items: center; max-width: 600px; margin: 0 auto; }
-        .label { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: #64748b; width: 80px; }
+        /* Шкала как в 16personalities, но в стиле Киберпанк */
+        .scale { display: flex; justify-content: space-between; align-items: center; gap: 15px; margin: 0 auto; max-width: 600px; }
+        .label { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: #475569; width: 80px; }
 
-        .circle {
-            cursor: pointer; border-radius: 50%; border: 2px solid #334155;
+        .dot {
+            cursor: pointer; border-radius: 50%; border: 2px solid #1e293b;
             transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             background: rgba(255,255,255,0.02);
         }
 
-        /* Стилизация кружков */
-        .c-large-pos { width: 65px; height: 65px; border-color: #10b981; }
-        .c-large-pos:hover { background: #10b981; box-shadow: 0 0 40px rgba(16, 185, 129, 0.5); }
-        
-        .c-large-neg { width: 65px; height: 65px; border-color: #f43f5e; }
-        .c-large-neg:hover { background: #f43f5e; box-shadow: 0 0 40px rgba(244, 63, 94, 0.5); }
-        
-        .c-mid { width: 45px; height: 45px; border-color: #475569; }
-        .c-small { width: 30px; height: 30px; border-color: #475569; }
+        /* Размеры кружков */
+        .d-3 { width: 60px; height: 60px; border-color: #10b981; }
+        .d-3:hover { background: #10b981; box-shadow: 0 0 30px rgba(16, 185, 129, 0.4); }
+        .dm-3 { width: 60px; height: 60px; border-color: #f43f5e; }
+        .dm-3:hover { background: #f43f5e; box-shadow: 0 0 30px rgba(244, 63, 94, 0.4); }
+        .d-0 { width: 25px; height: 25px; border-color: #334155; }
 
-        .progress-bar { width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 10px; margin-bottom: 40px; overflow: hidden; }
-        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); width: 0%; transition: 0.8s; }
+        .progress { width: 100%; height: 4px; background: rgba(255,255,255,0.05); border-radius: 10px; margin-bottom: 40px; overflow: hidden; }
+        .fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--purple)); width: 0%; transition: 0.6s; }
+
+        .btn-tg {
+            background: white; color: black; padding: 20px 40px; border-radius: 18px;
+            font-weight: 800; border: none; cursor: pointer; transition: 0.3s; font-size: 1rem;
+        }
+        .btn-tg:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(255,255,255,0.1); }
 
         .hidden { display: none; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        .btn-final {
-            background: white; color: black; padding: 20px 45px; border-radius: 20px;
-            font-weight: 800; border: none; cursor: pointer; transition: 0.3s; font-size: 1.1rem;
-        }
-        .btn-final:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(255,255,255,0.2); }
     </style>
 </head>
 <body>
 
-<div class="glass-container">
-    <div class="progress-bar"><div class="progress-fill" id="fill"></div></div>
+<div class="container">
+    <div class="progress"><div class="fill" id="f"></div></div>
 
-    <div id="quiz">
-        <div class="question-text" id="q-text">Вы чувствуете прилив сил после долгого общения с командой?</div>
+    <div id="quiz" class="glass-card">
+        <div class="q-text" id="qt">Загрузка...</div>
         
-        <div class="scale-box">
-            <div class="label" style="color: #10b981;">Да</div>
-            <div class="circle c-large-pos" onclick="next(3)"></div>
-            <div class="circle c-mid" onclick="next(2)"></div>
-            <div class="circle c-small" onclick="next(1)"></div>
-            <div class="circle c-small" style="width: 25px; height: 25px;" onclick="next(0)"></div>
-            <div class="circle c-small" onclick="next(-1)"></div>
-            <div class="circle c-mid" onclick="next(-2)"></div>
-            <div class="circle c-large-neg" onclick="next(-3)"></div>
+        <div class="scale">
+            <div class="label" style="color: #10b981; text-align: left;">Да</div>
+            <div class="dot d-3" onclick="nx(3)"></div>
+            <div class="dot d-0" style="width: 45px; height: 45px; border-color: #10b981;" onclick="nx(2)"></div>
+            <div class="dot d-0" style="width: 35px; height: 35px; border-color: #10b981;" onclick="nx(1)"></div>
+            <div class="dot d-0" onclick="nx(0)"></div>
+            <div class="dot d-0" style="width: 35px; height: 35px; border-color: #f43f5e;" onclick="nx(-1)"></div>
+            <div class="dot d-0" style="width: 45px; height: 45px; border-color: #f43f5e;" onclick="nx(-2)"></div>
+            <div class="dot dm-3" onclick="nx(-3)"></div>
             <div class="label" style="color: #f43f5e; text-align: right;">Нет</div>
         </div>
     </div>
 
-    <div id="result" class="hidden">
-        <h1 style="font-size: 3rem; margin-bottom: 10px;">Анализ готов.</h1>
-        <p id="res-type" style="font-size: 1.5rem; color: var(--primary); font-weight: 800; margin-bottom: 30px;"></p>
-        <button class="btn-final" onclick="location.href='https://t.me/NuIIReference'">ОБСУДИТЬ В TELEGRAM</button>
+    <div id="res" class="glass-card hidden">
+        <h1 style="font-size: 3rem; margin: 0 0 20px;">Анализ готов.</h1>
+        <p id="rt" style="font-size: 1.4rem; color: var(--accent); font-weight: 700; margin-bottom: 40px;"></p>
+        <button class="btn-tg" onclick="location.href='https://t.me/NuIIReference'">СВЯЗАТЬСЯ С АВТОРОМ</button>
     </div>
 </div>
 
@@ -108,20 +105,29 @@
         "В шумном офисе ваша продуктивность падает до нуля.",
         "Вы всегда проверяете факты перед тем, как принять решение."
     ];
+    let c = 0, s = 0;
 
-    let cur = 0, score = 0;
+    function render() {
+        document.getElementById('qt').innerText = qs[c];
+        document.getElementById('f').style.width = (c / qs.length) * 100 + '%';
+    }
 
-    function next(v) {
-        score += v;
-        cur++;
-        if (cur < qs.length) {
-            document.getElementById('q-text').innerText = qs[cur];
-            document.getElementById('fill').style.width = (cur / qs.length) * 100 + '%';
-        } else {
-            show();
-        }
+    function nx(v) {
+        s += v;
+        c++;
+        if (c < qs.length) render();
+        else show();
     }
 
     function show() {
+        document.getElementById('quiz').classList.add('hidden');
+        document.getElementById('res').classList.remove('hidden');
+        document.getElementById('f').style.width = '100%';
+        document.getElementById('rt').innerText = s > 0 ? "ТИП: DIGITAL ARCHITECT (Стратег)" : "ТИП: CREATIVE VISIONARY (Креатор)";
+    }
+    render();
+</script>
+</body>
+</html>
         document.getElementById('quiz').className = 'hidden';
         document.

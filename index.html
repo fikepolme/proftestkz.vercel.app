@@ -3,131 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Oracle | Анализ Личности</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+    <title>Digital Type Explorer | Узнай свою истинную роль</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --accent: #00f2fe;
-            --purple: #818cf8;
-            --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.1);
+            --analyst: #88619a; --diplomat: #33a474; --sentinel: #4298b4; --explorer: #e4ae3a;
+            --bg: #030712; --glass: rgba(255, 255, 255, 0.03);
         }
+        body { margin: 0; font-family: 'Manrope', sans-serif; background: var(--bg); color: white; overflow-x: hidden; }
+        
+        /* Navigation */
+        nav { padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); sticky; top:0; background: rgba(3,7,18,0.9); z-index: 100; backdrop-filter: blur(10px); }
+        .logo { font-weight: 800; font-size: 1.5rem; color: #00f2fe; }
 
-        body {
-            margin: 0; font-family: 'Plus Jakarta Sans', sans-serif;
-            background: #05070a;
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.15) 0, transparent 50%), 
-                radial-gradient(at 100% 100%, rgba(0, 242, 254, 0.1) 0, transparent 50%);
-            color: white; min-height: 100vh;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-        }
+        section { display: none; padding: 60px 5%; animation: fadeIn 0.5s ease; }
+        section.active { display: block; }
 
-        .container { width: 90%; max-width: 800px; z-index: 2; }
+        /* Home Page */
+        .hero { text-align: center; padding: 100px 5%; }
+        .hero h1 { font-size: 4rem; margin-bottom: 20px; }
+        .grid-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 50px; }
+        .step-card { background: var(--glass); padding: 40px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.1); transition: 0.3s; }
+        .step-card:hover { transform: translateY(-10px); background: rgba(255,255,255,0.06); }
+        .step-card h3 { color: #00f2fe; font-size: 1.5rem; }
 
-        .glass-card {
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--border);
-            border-radius: 40px;
-            padding: 60px 40px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-            text-align: center;
-            animation: fadeIn 0.8s ease;
-        }
+        /* Quiz UI */
+        .quiz-container { max-width: 800px; margin: 0 auto; text-align: center; }
+        .q-card { background: var(--glass); padding: 50px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.1); margin-top: 30px; }
+        .scale { display: flex; justify-content: space-between; align-items: center; margin-top: 50px; }
+        .dot { cursor: pointer; border-radius: 50%; border: 2px solid #334155; transition: 0.3s; }
+        .dot:hover { transform: scale(1.2); box-shadow: 0 0 20px rgba(0,242,254,0.3); }
 
-        .q-text { font-size: 2.2rem; font-weight: 800; margin-bottom: 50px; line-height: 1.2; letter-spacing: -1px; }
+        /* Types Popup */
+        .types-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 30px; }
+        .type-tag { padding: 15px; border-radius: 12px; font-weight: 800; text-align: center; font-size: 0.8rem; }
 
-        /* Шкала как в 16personalities, но в стиле Киберпанк */
-        .scale { display: flex; justify-content: space-between; align-items: center; gap: 15px; margin: 0 auto; max-width: 600px; }
-        .label { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: #475569; width: 80px; }
+        .btn { background: #00f2fe; color: #000; padding: 18px 40px; border-radius: 50px; font-weight: 800; border: none; cursor: pointer; transition: 0.3s; display: inline-block; text-decoration: none; }
+        .btn:hover { box-shadow: 0 0 30px rgba(0,242,254,0.5); transform: scale(1.05); }
 
-        .dot {
-            cursor: pointer; border-radius: 50%; border: 2px solid #1e293b;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            background: rgba(255,255,255,0.02);
-        }
-
-        /* Размеры кружков */
-        .d-3 { width: 60px; height: 60px; border-color: #10b981; }
-        .d-3:hover { background: #10b981; box-shadow: 0 0 30px rgba(16, 185, 129, 0.4); }
-        .dm-3 { width: 60px; height: 60px; border-color: #f43f5e; }
-        .dm-3:hover { background: #f43f5e; box-shadow: 0 0 30px rgba(244, 63, 94, 0.4); }
-        .d-0 { width: 25px; height: 25px; border-color: #334155; }
-
-        .progress { width: 100%; height: 4px; background: rgba(255,255,255,0.05); border-radius: 10px; margin-bottom: 40px; overflow: hidden; }
-        .fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--purple)); width: 0%; transition: 0.6s; }
-
-        .btn-tg {
-            background: white; color: black; padding: 20px 40px; border-radius: 18px;
-            font-weight: 800; border: none; cursor: pointer; transition: 0.3s; font-size: 1rem;
-        }
-        .btn-tg:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(255,255,255,0.1); }
-
-        .hidden { display: none; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="progress"><div class="fill" id="f"></div></div>
+<nav>
+    <div class="logo">DIGITAL_TYPE</div>
+    <div style="font-weight: 600; cursor: pointer;" onclick="showPage('home')">ГЛАВНАЯ</div>
+</nav>
 
-    <div id="quiz" class="glass-card">
-        <div class="q-text" id="qt">Загрузка...</div>
-        
-        <div class="scale">
-            <div class="label" style="color: #10b981; text-align: left;">Да</div>
-            <div class="dot d-3" onclick="nx(3)"></div>
-            <div class="dot d-0" style="width: 45px; height: 45px; border-color: #10b981;" onclick="nx(2)"></div>
-            <div class="dot d-0" style="width: 35px; height: 35px; border-color: #10b981;" onclick="nx(1)"></div>
-            <div class="dot d-0" onclick="nx(0)"></div>
-            <div class="dot d-0" style="width: 35px; height: 35px; border-color: #f43f5e;" onclick="nx(-1)"></div>
-            <div class="dot d-0" style="width: 45px; height: 45px; border-color: #f43f5e;" onclick="nx(-2)"></div>
-            <div class="dot dm-3" onclick="nx(-3)"></div>
-            <div class="label" style="color: #f43f5e; text-align: right;">Нет</div>
+<section id="home" class="active">
+    <div class="hero">
+        <h1>Бесплатный тест личности</h1>
+        <p style="font-size: 1.2rem; color: #94a3b8;">Узнайте, как ваш тип личности влияет на вашу карьеру в Digital.</p>
+        <button class="btn" style="margin-top: 30px;" onclick="showPage('test')">Пройти тест</button>
+    </div>
+
+    <div class="grid-steps">
+        <div class="step-card">
+            <div style="font-size: 3rem;">🧪</div>
+            <h3>ШАГ 1</h3>
+            <p>Будьте самим собой и отвечайте честно, чтобы выяснить свой тип.</p>
         </div>
-    </div>
-
-    <div id="res" class="glass-card hidden">
-        <h1 style="font-size: 3rem; margin: 0 0 20px;">Анализ готов.</h1>
-        <p id="rt" style="font-size: 1.4rem; color: var(--accent); font-weight: 700; margin-bottom: 40px;"></p>
-        <button class="btn-tg" onclick="location.href='https://t.me/NuIIReference'">СВЯЗАТЬСЯ С АВТОРОМ</button>
-    </div>
-</div>
-
-<script>
-    const qs = [
-        "Вы предпочитаете работать с цифрами, а не с текстами.",
-        "Вам проще придумать идею с нуля, чем дорабатывать чужую.",
-        "Вы считаете, что дисциплина важнее вдохновения.",
-        "В шумном офисе ваша продуктивность падает до нуля.",
-        "Вы всегда проверяете факты перед тем, как принять решение."
-    ];
-    let c = 0, s = 0;
-
-    function render() {
-        document.getElementById('qt').innerText = qs[c];
-        document.getElementById('f').style.width = (c / qs.length) * 100 + '%';
-    }
-
-    function nx(v) {
-        s += v;
-        c++;
-        if (c < qs.length) render();
-        else show();
-    }
-
-    function show() {
-        document.getElementById('quiz').classList.add('hidden');
-        document.getElementById('res').classList.remove('hidden');
-        document.getElementById('f').style.width = '100%';
-        document.getElementById('rt').innerText = s > 0 ? "ТИП: DIGITAL ARCHITECT (Стратег)" : "ТИП: CREATIVE VISIONARY (Креатор)";
-    }
-    render();
-</script>
-</body>
-</html>
-        document.getElementById('quiz').className = 'hidden';
-        document.
+        <div class="step-card" onclick="showPage('types')">
+            <div style="font-size: 3rem;">📊</div>
+            <h3>ШАГ 2</h3>
+            <p>Посмотрите подробные результаты и типы других людей.</p>
+        </div>
+        <div class="step-card">
+            <div style="font-size: 3rem;">🚀</div>
+            <h3>ШАГ 3</h3>
+            <p>Раскройте свой потенциал в работе с трафиком и данными.</p>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personality Discovery | Кто ты?</title>
+    <title>Global Personality ID</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -12,48 +12,44 @@
         }
         body { margin: 0; font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: white; display: flex; flex-direction: column; min-height: 100vh; }
         
-        nav { padding: 25px 5%; display: flex; justify-content: space-between; align-items: center; background: rgba(3,7,18,0.8); backdrop-filter: blur(15px); sticky; top:0; z-index: 10; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        nav { padding: 25px 5%; display: flex; justify-content: space-between; align-items: center; background: rgba(3,7,18,0.8); backdrop-filter: blur(15px); sticky; top:0; z-index: 100; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .logo { font-weight: 800; font-size: 1.4rem; letter-spacing: -1px; cursor: pointer; }
         .logo span { color: var(--primary); }
 
-        section { display: none; flex: 1; padding: 60px 5%; animation: slideUp 0.5s ease forwards; }
+        section { display: none; flex: 1; padding: 40px 5%; animation: fadeIn 0.4s ease; }
         section.active { display: flex; flex-direction: column; align-items: center; justify-content: center; }
 
-        .glass { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); padding: 50px 40px; border-radius: 40px; max-width: 800px; width: 100%; box-sizing: border-box; text-align: center; }
+        .glass { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); padding: 50px 30px; border-radius: 40px; max-width: 800px; width: 100%; box-sizing: border-box; text-align: center; }
         
-        h1 { font-size: clamp(2rem, 7vw, 3.5rem); font-weight: 800; line-height: 1.1; margin-bottom: 20px; }
-        .hero-text { color: #94a3b8; font-size: 1.2rem; margin-bottom: 40px; max-width: 600px; }
-
         .btn { background: white; color: black; padding: 18px 45px; border-radius: 50px; font-weight: 800; border: none; cursor: pointer; transition: 0.3s; font-size: 1.1rem; }
         .btn:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(255,255,255,0.2); }
 
-        /* Quiz UI */
-        .q-text { font-size: 1.8rem; font-weight: 700; margin-bottom: 50px; line-height: 1.3; }
+        .q-text { font-size: 1.6rem; font-weight: 700; margin-bottom: 40px; line-height: 1.3; min-height: 80px; }
         .scale { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 550px; margin: 0 auto; }
-        .dot { cursor: pointer; border-radius: 50%; border: 2px solid #334155; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .dot:hover { border-color: var(--primary); transform: scale(1.2); box-shadow: 0 0 25px rgba(0, 242, 254, 0.3); }
+        .dot { cursor: pointer; border-radius: 50%; border: 2px solid #334155; transition: 0.3s; }
+        .dot:hover { border-color: var(--primary); transform: scale(1.15); box-shadow: 0 0 20px rgba(0, 242, 254, 0.3); }
         
-        .progress-w { width: 100%; height: 6px; background: #1e293b; border-radius: 10px; margin-bottom: 40px; overflow: hidden; }
-        .progress-f { height: 100%; background: linear-gradient(90deg, var(--primary), var(--purple)); width: 0%; transition: 0.5s; }
-
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .progress-w { width: 100%; max-width: 800px; height: 6px; background: #1e293b; border-radius: 10px; margin-bottom: 30px; overflow: hidden; }
+        .progress-f { height: 100%; background: linear-gradient(90deg, var(--primary), var(--purple)); width: 0%; transition: 0.4s; }
 
         .type-badge { display: inline-block; padding: 8px 20px; border-radius: 10px; font-weight: 800; text-transform: uppercase; margin-bottom: 15px; font-size: 0.9rem; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
 <nav>
-    <div class="logo" onclick="go('home')">SELF<span>ID</span></div>
+    <div class="logo" onclick="go('home')">WORLD<span>ID</span></div>
     <div style="font-size: 0.9rem; font-weight: 600; opacity: 0.6; cursor: pointer;" onclick="go('home')">ГЛАВНАЯ</div>
 </nav>
 
 <section id="home" class="active">
-    <h1>Пойми, кто ты есть.</h1>
-    <p class="hero-text">Универсальный тест личности, который поможет разобраться в карьере, отношениях и твоих скрытых талантах.</p>
+    <h1>Твоя личность — твоя сила.</h1>
+    <p style="color: #94a3b8; font-size: 1.2rem; margin-bottom: 40px; text-align:center; max-width:600px;">Пройди универсальный тест и узнай, как твой характер влияет на карьеру, отношения и успех в жизни.</p>
     <div class="glass">
-        <h2 style="margin-top:0">Бесплатный тест</h2>
-        <p>Ответь на 10 вопросов и получи свой психологический портрет.</p>
+        <h2 style="margin-top:0">Готовы к открытию?</h2>
+        <p>20 вопросов для точного анализа вашего психотипа.</p>
         <button class="btn" onclick="go('test')">НАЧАТЬ ТЕСТ</button>
     </div>
 </section>
@@ -61,86 +57,5 @@
 <section id="test">
     <div class="progress-w"><div id="bar" class="progress-f"></div></div>
     <div class="glass">
-        <div id="q-text" class="q-text">Вы часто погружаетесь в свои мысли?</div>
-        <div class="scale">
-            <span style="color: #10b981; font-weight: 800;">ДА</span>
-            <div class="dot" style="width: 60px; height: 60px; border-color: #10b981;" onclick="nx(3)"></div>
-            <div class="dot" style="width: 45px; height: 45px; border-color: #10b981;" onclick="nx(1)"></div>
-            <div class="dot" style="width: 25px; height: 25px;" onclick="nx(0)"></div>
-            <div class="dot" style="width: 45px; height: 45px; border-color: #f43f5e;" onclick="nx(-1)"></div>
-            <div class="dot" style="width: 60px; height: 60px; border-color: #f43f5e;" onclick="nx(-3)"></div>
-            <span style="color: #f43f5e; font-weight: 800;">НЕТ</span>
-        </div>
-    </div>
-</section>
-
-<section id="result">
-    <div class="glass">
-        <div id="res-badge" class="type-badge">АНАЛИТИК</div>
-        <h1 id="res-title" style="color: var(--primary); margin: 10px 0;"></h1>
-        <p id="res-desc" style="font-size: 1.2rem; color: #94a3b8; line-height: 1.6; margin-bottom: 40px;"></p>
-        <button class="btn" onclick="location.href='https://t.me/NuIIReference'">ПОДРОБНЫЙ РАЗБОР В TG</button>
-    </div>
-</section>
-
-<script>
-    const qs = [
-        "Вам легко заводить разговор с новыми людьми.",
-        "Вы предпочитаете иметь четкий план на день, а не импровизировать.",
-        "Вы часто сопереживаете людям, даже если вы с ними не согласны.",
-        "Вы считаете, что логика важнее чувств при принятии решений.",
-        "Вам комфортно находиться в центре внимания.",
-        "Вы всегда проверяете факты, прежде чем сделать вывод.",
-        "Вы предпочитаете тихий вечер дома шумной вечеринке.",
-        "Вам нравится обсуждать абстрактные теории и идеи.",
-        "Вы всегда доводите начатые проекты до конца.",
-        "Вы часто полагаетесь на свою интуицию."
-    ];
-
-    let c = 0, s = 0;
-
-    function go(id) {
-        document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        if(id === 'test') { c = 0; s = 0; update(); }
-        window.scrollTo(0,0);
-    }
-
-    function update() {
-        document.getElementById('q-text').innerText = qs[c];
-        document.getElementById('bar').style.width = (c / qs.length) * 100 + '%';
-    }
-
-    function nx(v) {
-        s += v; c++;
-        if(c < qs.length) update();
-        else finish();
-    }
-
-    function finish() {
-        go('result');
-        const badge = document.getElementById('res-badge');
-        const title = document.getElementById('res-title');
-        const desc = document.getElementById('res-desc');
-
-        if(s > 10) {
-            badge.innerText = "Дипломаты"; badge.style.background = "var(--diplomat)";
-            title.innerText = "Борец (ENFP)";
-            desc.innerText = "Вы — творческая личность, полная энергии и энтузиазма. Вы видите возможности везде и вдохновляете людей своим видением мира.";
-        } else if (s > 0) {
-            badge.innerText = "Аналитики"; badge.style.background = "var(--analyst)";
-            title.innerText = "Логик (INTP)";
-            desc.innerText = "Вы — жадный до знаний мыслитель. Ваш мозг постоянно ищет закономерности. Вы идеальны там, где нужно решать сложные задачи.";
-        } else if (s > -10) {
-            badge.innerText = "Хранители"; badge.style.background = "var(--sentinel)";
-            title.innerText = "Администратор (ISTJ)";
-            desc.innerText = "Вы — человек фактов и надежности. На вас всегда можно положиться. Порядок и дисциплина — ваши главные инструменты успеха.";
-        } else {
-            badge.innerText = "Искатели"; badge.style.background = "var(--explorer)";
-            title.innerText = "Виртуоз (ISTP)";
-            desc.innerText = "Вы — мастер практических решений. Вы любите исследовать мир руками и головой, находя выход из самых запутанных ситуаций.";
-        }
-    }
-</script>
-</body>
-</html>
+        <div id="q-text" class="q-text">Загрузка...</div>
+        <div class
